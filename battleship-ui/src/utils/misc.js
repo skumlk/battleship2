@@ -22,10 +22,10 @@ export function validateShipCoorindates(warship) {
     
     if (x < 0 && y < 0) return { status: false, message: "Values should be larger than zero" }
 
-    if (type == ShipType.DESTROYER.id && (x + ShipType.DESTROYER.length > GRID_SIZE))
+    if (type === ShipType.DESTROYER.id && (x + ShipType.DESTROYER.length > GRID_SIZE))
         return { status: false, message: "Destroyer is out of range" }
 
-    if (type == ShipType.BATTLESHIP.id && (x + ShipType.BATTLESHIP.length > GRID_SIZE))
+    if (type === ShipType.BATTLESHIP.id && (x + ShipType.BATTLESHIP.length > GRID_SIZE))
         return { status: false, message: "Battleship is out of range" }
 
     return { status: true, message: null }

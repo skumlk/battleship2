@@ -41,13 +41,13 @@ const Grid = ({ isReadOnly, onMark, squares, setSquares, isShowShips, board = {}
 
     return (
         <div>
-            <div className="grid grid-cols-10">
+            <div className="grid grid-cols-10" key="div_a">
                 {squares.map((row, y) => {
-                    return (row.map((cell, x) => <RenderSquare x={x} y={y}
+                    return (row.map((cell, x) => <RenderSquare x={x} y={y} key={x + y *10}
                         handleClick={handleClick} value={squares[y][x]} ships={warships} successFire={successFire} />))
                 })}
             </div>
-            <div>{board.score}</div>
+            <div key="div_b">{board.score}</div>
         </div>
     );
 }

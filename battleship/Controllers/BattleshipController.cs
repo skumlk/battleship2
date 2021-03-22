@@ -7,6 +7,7 @@ using Battleship.Data;
 using Battleship.Dtos;
 using Battleship.Models;
 using Battleship.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -49,11 +50,11 @@ namespace Battleship.Controllers
             return Ok(new ReadAuthDto { Token = token });
         }
 
+        [Authorize]
         [HttpPost("mark/{x}/{y}")]
         public ActionResult<string> MarkCell(int x, int y)
         {
-            
-
+            if (getToken() == null) return Unauthorized();
             var gameId = getGameId();
             var result = _battleshipService.markCell(gameId, x, y);
             var game = result.Item1;
@@ -67,25 +68,30 @@ namespace Battleship.Controllers
         [HttpGet("status")]
         public ActionResult<string> GetStatus()
         {
+            if (getToken() == null) return Unauthorized();
             var gameId = getGameId();
             var result = _battleshipService.getGameStatus(gameId);
-
             var game = result.Item1;
             var gameDto = _mapper.Map<GameDto>(game);
             gameDto.BoardA.WarShips = null;
             gameDto.BoardA.successFire = result.Item2;
             gameDto.BoardB.successFire = result.Item3;
-
             return Ok(gameDto);
         }
-        
+
         private int getGameId()
         {
-            var token =  (string)HttpContext.Request.Headers["Authorization"];
+            var token = getToken();
+            if (token == null) return -1;
             token = token.Split(" ")[1];
             var jwtToken = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
             var gameId = jwtToken.Payload["user"];
             return Int32.Parse(gameId.ToString());
+        }
+
+        private string getToken()
+        {
+            return (string)HttpContext.Request.Headers["Authorization"];
         }
     }
 }

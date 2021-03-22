@@ -4,7 +4,7 @@ export const ShipType = { DESTROYER: { id: 0, length: 4 }, BATTLESHIP: { id: 1, 
 
 export function getShipLength(shipId){
     for(let x in ShipType){
-        if(ShipType[x].id == shipId)
+        if(ShipType[x].id === shipId)
             return ShipType[x].length
     }
 

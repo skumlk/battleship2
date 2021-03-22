@@ -16,6 +16,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Services.Battleship;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace battleship
 {
@@ -64,7 +67,9 @@ namespace battleship
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "battleship v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+
+
 
             app.UseRouting();
 

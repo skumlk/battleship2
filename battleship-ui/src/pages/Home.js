@@ -19,8 +19,8 @@ const Home = () => {
 
     function createNewGame(ships) {
         const data = { "ships": ships }
-        HttpClient("battleship/start", { data }).
-            then((result) => {
+        HttpClient("battleship/start", { data })
+            .then((result) => {
                 const token = result.token
                 localStorage.setItem("token", token)
                 fetchAndUpdateGame();
@@ -29,15 +29,15 @@ const Home = () => {
 
     function onMark(x, y) {
 
-        HttpClient(`battleship/mark/${x}/${y}`, { method: "POST" }).
-            then((result) => {
+        HttpClient(`battleship/mark/${x}/${y}`, { method: "POST" })
+            .then((result) => {
                 _updateGameData(result)
             })
     }
 
     function fetchAndUpdateGame() {
-        HttpClient("battleship/status").
-            then((result) => {
+        HttpClient("battleship/status")
+            .then((result) => {
                 _updateGameData(result)
             })
     }
