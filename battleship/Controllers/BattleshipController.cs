@@ -50,7 +50,6 @@ namespace Battleship.Controllers
             return Ok(new ReadAuthDto { Token = token });
         }
 
-        [Authorize]
         [HttpPost("mark/{x}/{y}")]
         public ActionResult<string> MarkCell(int x, int y)
         {
